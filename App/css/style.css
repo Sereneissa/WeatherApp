@@ -1,0 +1,377 @@
+body {
+    font-family: var(--azerat-font);
+    font-weight: var(--font-light);
+    margin: 0;  
+
+}
+
+
+#app{
+      /* grid-template-columns:  */
+    display: grid;
+    grid-auto-rows: 0.5fr 1fr 2fr;
+    height: 100px;
+    color: #ffffff;
+    grid-gap: 5em;
+    font-size: 15px;
+    font-family: monospace;
+   
+
+}
+
+
+.background-image{ 
+    background-image: cover;
+    background-repeat: repeat;
+    background-position: center;
+    position: fixed;
+    opacity: 0.3;
+    max-width: 100%;
+    height: 100%;
+    z-index: -10;
+    grid-column: 1 /-1;
+    grid-row: 1 /-1;
+    
+}
+
+
+.sidenav {
+     /* Full-height: remove this if you want "auto" height */
+    height: 480px;
+    width: 280px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: -1; 
+    top: 0; 
+    left: 0;
+    background-color: rgba(0, 22, 94, 0.747); /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    margin-top: 120px;
+    margin-left: 0px;
+    border-radius: 30px; 
+    
+  }
+
+
+.input-field {
+    max-width: 500px;
+    height: 40px;
+    padding: 0px 24px;
+    border-radius: 20px;
+    border: none;
+    padding-top: 5px;
+    vertical-align:middle;
+    font-size: var(--font-14px);
+    margin-left: 5%;
+}
+.input-field::placeholder {
+    font-size: 14px;
+    vertical-align: baseline;
+}
+
+
+#error-msg {
+    margin-left: 15px;
+    font-size: 10px;
+    font-style: italic;
+    color: yellow;
+    padding-top: 4px;
+}
+
+#generate {
+    background: #002658;
+    color: rgb(231, 242, 252);
+    font-size: 15px;
+    font-family: 'Oswald', sans-serif;
+    border: none;
+    box-shadow: 2px 3px 2px rgb(173, 171, 171);
+    text-align: center;
+    margin: auto;
+    margin-left: 8%;
+    width: 90px;
+    height: 32px;
+    border-radius: 8px;
+    text-align: center;
+ 
+}
+
+
+#entryHolder{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    font-size: 25px;
+    margin-left: 50px;
+    margin-top: 30%;
+    bottom: 10%;
+    color: rgba(0, 0, 0, 0.705);
+    align-items: left;
+  
+
+}
+
+
+.entry{
+    max-height: 100%;
+    max-width: 100%; 
+    position: fixed; 
+    z-index: -1; 
+    top: 0; 
+    right: 0;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    margin-right: 5px;
+   
+    
+}
+
+
+.headline {
+    justify-content: left;
+    position: relative;
+    margin-top: 50px;
+    margin-left: 40px;
+
+}
+
+.title{
+    font-size: 40px;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.685);
+  
+}
+
+#date {
+    font-size: 25px;
+    text-align: center;
+    
+
+}
+
+#temp{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    align-items: center;
+    color: rgba(0, 54, 172, 0.73);
+    font-weight: 800;
+    font-size: 25px;
+
+
+}
+
+
+#humidity{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    align-items: center;
+    color: rgba(0, 54, 172, 0.73);
+    font-weight: 800;
+    font-size: 25px;
+}
+
+#feelslike{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    align-items: center;
+    color: rgba(0, 54, 172, 0.73);
+    font-weight: 800;
+    font-size: 25px;
+}
+
+#city{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    align-items: center;
+    color: rgba(0, 54, 172, 0.73);
+    font-weight: 800;
+    font-size: 25px;
+}
+
+/*  Basic Styling To Override Default For Basic HTML Elements */
+label{
+    display:block;
+    font-size: 15px;
+    margin-left: 15px;
+    text-align: left;
+
+    
+}
+
+input{
+    background: #ecececb0;
+    font-size: 15px;
+    font-family: 'Oswald', sans-serif;
+    border: none;
+    box-shadow: 2px 2px 2px #444;
+    text-align: left;
+}
+
+
+
+button{
+    background: #002658;
+    color: white;
+    font-size: 20px;
+    font-family: 'Oswald', sans-serif;
+    border: none;
+    margin-left: 50%;
+    margin-right: 30%;
+    text-align: center;
+
+}
+
+
+
+h1{
+    font-size: 30px;
+    height: 30px;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.932);
+   
+    
+
+    
+}
+
+textarea{
+    background: #002658;
+    color: white;
+    font-size: 15;
+    font-family: 'Oswald', sans-serif;
+    border: none;
+    box-shadow: 2px 2px 2px #444;
+    text-align: left;
+    
+}
+
+/* Reset style for HTML element on active to have no border*/
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+/* Style for Placeholder Text*/
+::placeholder { /* Firefox, Chrome, Opera */ 
+    color: rgb(223, 223, 233); 
+    font-family: 'Oswald', sans-serif;
+
+} 
+  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+    color:rgb(223, 223, 223);  
+    font-family: 'Oswald', sans-serif;
+
+} 
+  
+::-ms-input-placeholder { /* Microsoft Edge */ 
+    color: rgb(223, 223, 223); 
+    font-family: 'Oswald', sans-serif;
+
+} 
+
+/* Mobile */ 
+@viewport {
+    width: device-width ;
+    zoom: 1.0 ;
+  }
+
+@media screen and (min-width: 450px){ 
+    .sidenav {
+        width: 280px;
+        
+    }
+}
+
+@media screen and (min-width: 630px){
+
+    h1 {        
+        margin-top: 150px;
+     }
+
+    
+     #entryHolder{
+        position: relative;
+        text-align: left;
+        font-size: 30px;
+        margin-left: 50px;
+        margin-top: 20%;
+    }
+
+    #date {
+        font-size: 25px;
+        text-align: center;
+        
+    
+    }
+    
+    #temp{
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+        align-items: center;
+        color: rgba(0, 54, 172, 0.73);
+        font-weight: 800;
+        font-size: 25px;
+    }
+    
+    
+    #humidity{
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+        align-items: center;
+        color: rgba(0, 54, 172, 0.73);
+        font-weight: 800;
+        font-size: 25px;
+    }
+    
+    #feelslike{
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+        align-items: center;
+        color: rgba(0, 54, 172, 0.73);
+        font-weight: 800;
+        font-size: 25px;
+    }
+    
+    #city{
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+        align-items: center;
+        color: rgba(0, 54, 172, 0.73);
+        font-weight: 800;
+        font-size: 25px;
+    }
+
+    .holder{
+        height: 100%;
+    }
+}
+
+@media screen and (min-width: 1000px){
+    #app{
+        grid-auto-rows: 0.5fr 1fr 2fr;
+        height: 100px;
+    }
+
+    .entry{
+        height: 100%;
+        width: 77%; 
+        
+    }
+
+    .sidenav{
+        height: 500px;
+        width: 280px; 
+    }
+  
+}
