@@ -1,62 +1,27 @@
-
-
-
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
-const daysOfWeek = [
-    `Sun`,
-    `Mon`, 
-    `Tue`,
-    `Wed`,
-    `Thu`,
-    `Fri`,
-    `Sat`    
-];
-const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
-];
+const baseURL = 'https://api.openweathermap.org/data/2.5/weather?';
+const weatherURL = 'https://api.openweathermap.org/data/2.5/forecast?q=';
+const metric = '&units=metric';  
+const apiKey = '&appid=f39afc0e7211a79d6b404b457dc3633a';
+const submit = document.querySelector('#generate');
+const humidity = document.querySelector('#humidity');
+const feelsLike = document.querySelector('#feelslike');
+const temperature = document.querySelector('#temp');
+const city = document.querySelector('#city');;
+
+//other definitions 
+
+const weekdays = [`Sunday`,`Monday`,`Tuesday`,`Wednesday`,`Thursday`,`Friday`,`Saturday`];
+
+const allMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 
-/* api calls */ 
-
-let baseURL = 'https://api.openweathermap.org/data/2.5/weather?',
-    foreCastURL = 'https://api.openweathermap.org/data/2.5/forecast?q=',
-    metric = '&units=metric',     
-    apiKey = '&appid=f39afc0e7211a79d6b404b457dc3633a',
-    submitBtn = document.querySelector('#generate'),
-    humidity = document.querySelector('#humidity'), 
-    feelsLike = document.querySelector('#feelslike'),
-    temperature = document.querySelector('#temp'),
-    city = document.querySelector('#city');;
-
-let userCity = ``,
-    lat,
-    long,
-    latAndLong,
-    forecastTemp = [],        
-    forecastCondition= [],
-    foreCastDay = [],
-    foreCastDate = [],
-    foreCastMonth = [];
-
-
-
-const inputTheData = (apiData) => {
-    const errorMsg = document.querySelector('#error-msg');
-    errorMsg.innerHTML = '';
+let inputData = (apiData) => {
+    const errorMessage = document.querySelector('#error-msg');
+    errorMessage.innerHTML = '';
     humidity.innerHTML = `${apiData.main.humidity}%`;
     feelsLike.innerHTML = `${apiData.main.feels_like}°C`;
     temperature.innerHTML = `${Math.floor(apiData.main.temp)}°C`;
@@ -65,70 +30,30 @@ const inputTheData = (apiData) => {
 
 // Pulls data from API 
 const getLocation = async (url, location, units, key) => {   
-    const errorMsg = document.querySelector('#error-msg');
+    const errorMessage = document.querySelector('#error-msg');
     try {        
         const resp = await fetch(url+location+units+key);
         const data = await resp.json();
         if (data.cod === "404") {
-            errorMsg.innerHTML = 'Please enter a valid zip code';
+            errorMessage.innerHTML = 'Please enter a valid zip code';
         } else {                  
-            inputTheData(data);
+            inputData(data);
             userCity = data.name;                  
             return data;
         }        
     }
     catch (error) {
         console.log('error', error);
-        errorMsg.innerHTML = 'Please enter a valid zip code';
+        errorMessage.innerHTML = 'Enter a valid zip-code';
     }
-}
-
-
-// Get forecast temp and condition
-const getForecast = async (url, location, units, key) => {
-    try {
-        const resp = await fetch(url+location+units+key);
-        const data = await resp.json();
-        // Resets all array data
-        forecastTemp = [],        
-        foreCastDay = [],
-        foreCastDate = [],
-        foreCastMonth = [];
-    
-         for (let i = 1; i < data.list.length; i++) {
-            if (i % 7 === 0) {               
-                const timeStamp = data.list[i].dt,
-                      date = new Date(timeStamp * 1000),
-                      day = date.getDay(),
-                      dateNum = date.getDate(),   
-                      month = date.getMonth();
-
-                foreCastMonth.push(month);
-                foreCastDate.push(dateNum);     
-                foreCastDay.push(day);                    
-                forecastTemp.push(Math.round(data.list[i].main.temp));                
-            };
-        };     
-
-    }
-    catch (error) {
-        console.log('error', error);
-    }
-}; 
-
-
-
-// Find co-ords
-let findUserCords = () => {
-   
 }
 
 // Promise function that gets users location from co-ords
-const findUserLocation = () => {
-    return new Promise(function(resolve, reject) {
+const findLocation = () => {
+    return new Promise(function(resolve, error) {
      window.addEventListener('load', function() {
            if(!navigator.geolocation) {
-             loadingScreen.innerHTML = `Geolocation is not supported by your browser`; 
+             findLocation.innerHTML = `Geolocation is not supported by your browser`; 
            } else {           
              navigator.geolocation.getCurrentPosition(success, error);
            }                   
@@ -147,13 +72,13 @@ const findUserLocation = () => {
  };
  
 
-// Envokes Promise, then hides loading screen
-findUserLocation()
+// Envokes & Promise 
+findLocation()
 .then(function(val){  
-   return getLocation(baseURL, latAndLong, metric, apiKey); 
+   return getLocation(baseURL, metric, apiKey); 
 })
 .then (function(val) {
-    return getForecast(foreCastURL, `${userCity}`, metric, apiKey);
+    return getweatherData(weatherURL, `${userCity}`, metric, apiKey);
 })
 
 .then(function(val) {
@@ -196,12 +121,12 @@ const postData = async ( url = '', data = {})=>{
       .then(function(data){  
         retrieveData('/all')
       })
-      updateUI();
+      update();
   }
 
 
   // Updates the page with the user input
-const updateUI = async () => {
+const update = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
@@ -222,14 +147,14 @@ const getWeather = (e) => {
 
     getLocation(baseURL, zipCodeInput, metric, apiKey)
     .then(function(val) {        
-        return getForecast(foreCastURL, `${userCity}`, metric, apiKey);
+        return getForecast(weatherURL, `${userCity}`, metric, apiKey);
     })
    
     postGet();
 };
 
 // Gets weather data from user zip code
-submitBtn.addEventListener('click', getWeather);
+submit.addEventListener('click', getWeather);
 
 
 
@@ -237,11 +162,11 @@ submitBtn.addEventListener('click', getWeather);
 let displayDate = () => {
     const date = document.querySelector('#date');         
     const currentDate = new Date(),
-          dayOfWeek = currentDate.getDay(),
+          dayOftheWeek = currentDate.getDay(),
           month = currentDate.getMonth(),
-          dayNum = currentDate.getDate(),
+          dateDay= currentDate.getDate(),
           year = currentDate.getFullYear();
 
-          date.innerHTML = `${daysOfWeek[dayOfWeek]}, ${months[month]} ${dayNum} ${year}`; 
+          date.innerHTML = `${weekdays[dayOftheWeek]}, ${allMonths[month]} ${dateDay} ${year}`; 
 }
 displayDate();
