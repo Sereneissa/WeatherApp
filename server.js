@@ -1,4 +1,8 @@
 
+// Setup empty JS object to act as endpoint for all routes
+let projectData = {};
+
+
 // Require Express to run server and routes
 const express = require("express");
 
@@ -30,9 +34,6 @@ const server = app.listen(port, listening);
 // Initialize the main project folder
 app.use(express.static('app'));
 
-// Setup empty JS object to act as endpoint for all routes
-let projectData = {};
-
 //GET request 
 
 app.get('/all', sendData);
@@ -47,9 +48,12 @@ function callBack(req,res){
 }
 
 // POST request
-const data = [];
+const projectData = [];
 
-app.post('/addData', callBack);
-    function callBack(request, response) {
-    data.push(request.body);
+app.post('/addData', postData);
+    function postData(request, response) {
+      projectData = request.body;
+      response.send({ message: "Post recieved"})
+      console.log(request);
 }
+    
