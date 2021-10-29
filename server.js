@@ -1,4 +1,8 @@
 
+// Setup empty JS object to act as endpoint for all routes
+let projectData = {};
+
+
 // Require Express to run server and routes
 const express = require("express");
 
@@ -15,42 +19,41 @@ const cors = require('cors');
 app.use(cors());
 
 // Setup Server
-const port= 8000;
+const port= 3000;
 
 // Spin up the server
 const server = app.listen(port,listening);
 
 // Callback to debug 
-function listening() {
-    console.log("server running")
-    console.log(`running on localhost: $(port)`);
-}
+const server = app.listen(port, listening);
+ function listening(){
+    // console.log(server);
+    console.log(`running on localhost: ${port}`);
+  };
 
 // Initialize the main project folder
-app.use(express.static('website'));
-
-// Setup empty JS object to act as endpoint for all routes
-let appData = {};
+app.use(express.static('app'));
 
 //GET request 
 
-app.get("/all",function(request, response) {
-    res.send(appData);
-});
+app.get('/all', sendData);
 
-app.post('/add', function ( request ,response ) {
-    response.send('POST received');
-  });
+function sendData (request, response) {
+  response.send(projectData);
+};
+
+add.post('/add',callBack);
+function callBack(req,res){
+    res.send('POST receieved')
+}
 
 // POST request
-const data = [];
-app.post('/addData', function (request, response) {
-    data.push(request.body);
-    appData["answer"]= request.body.answer;
-    console.log(`this is body`);
-    console.log(request.body);
-    console.log(`this is appData`);
-    console.log(appData);
-    console.log(`this is data`);
-    console.log(data);
-})
+const projectData = [];
+
+app.post('/addData', postData);
+    function postData(request, response) {
+      projectData = request.body;
+      response.send({ message: "Post recieved"})
+      console.log(request);
+}
+    
