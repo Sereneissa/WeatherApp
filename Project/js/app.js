@@ -5,7 +5,7 @@ document.getElementById("date").innerHTML = d;
 //global variables
 let baseURL ='https://api.openweathermap.org/data/2.5/weather?';
 let apiKey =  '&appid=f39afc0e7211a79d6b404b457dc3633a';
-
+const metric = '&units=metric';  
 
 //get selectors 
 const submit = document.querySelector('#generate');
@@ -14,6 +14,24 @@ const feelslike = document.querySelector('#feelslike');
 const temp = document.querySelector('#temp');
 const place = document.querySelector('#city');
 
+document.getElementById('generate').addEventListener('click', performAction);
+
+function performAction(e){
+  const zipCodeInput = document.getElementById('zip').value;
+  getForecastData(baseURL,zipCodeInput,apiKey)
+
+}
+
+const getForecastData = async (baseURL,zip,key) => {
+  const res = await fetch(baseURL+zip+key)
+  try{
+    const data = await res.json();
+    console.log(data)
+    return data; 
+  } catch(error) {
+    console.log("error",error);
+  }
+}
 
 // Post request in async format - received from udacity course 
 const postData = async ( url = '', data = {})=>{
@@ -34,9 +52,10 @@ const postData = async ( url = '', data = {})=>{
     }catch(error) {
     console.log("error", error);
     }
+
 }
 
-// interact with the forecast data to show weather data 
+//interact with the forecast data to show weather data 
 let weatherData = (data) => {
   const errorMsg = document.querySelector('#errormsg');
       errorMsg.innerHTML = '';
@@ -48,7 +67,7 @@ let weatherData = (data) => {
 
 
 //Implement error message 
-const getForecastData = async(url, location, key,) => {
+const getForecastError = async(url, location, key,) => {
   const errorMsg = doducment.querySelector('#errormsg');
   try {
     const response = await fetch(url+location+key);
@@ -57,7 +76,7 @@ const getForecastData = async(url, location, key,) => {
       errorMsg.innerHTML = 'Enter a valid zip code';
   } else {                  
       weatherData(data);
-      user = data.name;                  
+      usersLocation = data.name;                  
       return data;
     }        
   }
@@ -68,21 +87,20 @@ const getForecastData = async(url, location, key,) => {
 
 }
 
-
 //Gets weather data from API
-const getTheForecast = async(baseURL,location,key) => {
-  console.log(`${baseURL}${location}&appid=${key}`);
-  const response = await fetch(`${baseURL}${location}&appid=${key}`);
+const getTheForecast = async(baseURL,zip,apiKey) => {
+  console.log(`${baseURL}${zip}&appid=${apiKey}`);
+  const response = await fetch(`${baseURL}${zip}&appid=${apiKey}`);
   try{
     const weatherData = await response.json();
     return weatherData;
   } catch(error) {
     console.log('errorMsg', error);
   }
+
 } 
 
-
-// Update User UI 
+//Update User UI 
 const updateUI = async () => {
   const request = await fetch('/all');
   try{
@@ -94,9 +112,10 @@ const updateUI = async () => {
 
   }catch(error){
     console.log("error", error);
+
+    updateUI();
   }
 }
-updateUI();
 
 // Find users location & asks permission to locate 
 const locationFinder = new Promise(function(resolve, error) {

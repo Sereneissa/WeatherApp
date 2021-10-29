@@ -1,4 +1,4 @@
-// Create a new date instance dynamically with JS
+/* Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
@@ -93,7 +93,7 @@ const getFeelings = () => {
     }            
 }
 
-/* Function to POST data */
+// Function to POST data 
 const postData = async ( url = '', data = {})=>{
     console.log(data)
       const response = await fetch(url, {
@@ -169,4 +169,4 @@ let displayDate = () => {
 
           date.innerHTML = `${weekdays[dayOftheWeek]}, ${allMonths[month]} ${dateDay} ${year}`; 
 }
-displayDate();
+displayDate(); */
