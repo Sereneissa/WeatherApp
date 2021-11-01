@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 // Display current date, time & location (est vs pst etc)
 const d = new Date();
 document.getElementById("date").innerHTML = d;
@@ -18,14 +16,14 @@ const place = document.querySelector('#city');
 
 document.getElementById('generate').addEventListener('click', performAction);
 
-function performAction(){
+function performAction(e){
   const zipCodeInput = document.getElementById('zip').value;
   getForecastData(baseURL,zipCodeInput,apiKey)
 
 }
 
-const getForecastData = async (baseURL,zip,key) => {
-  const res = await fetch(baseURL+zip+key)
+const getForecastData = async (baseURL,zipCodeInput,apiKey) => {
+  const res = await fetch(baseURL+zipCodeInput+apiKey)
   try{
     const data = await res.json();
     console.log(data)
@@ -133,4 +131,4 @@ const locationFinder = new Promise(function(resolve, error) {
       "<br>Longitude: " + position.coords.longitude;
       resolve(`worked`);   
   }
-});
+});  

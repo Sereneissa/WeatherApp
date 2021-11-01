@@ -31,7 +31,7 @@ const server = app.listen(port, listening);
   };
 
 // Initialize the main project folder
-app.use(express.static('Project'));
+app.use(express.static('app'));
 
 //GET request 
 
