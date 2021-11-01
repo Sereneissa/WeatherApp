@@ -2,6 +2,10 @@
 // Setup empty JS object to act as endpoint for all routes
 let projectData = {};
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2ae1cade81aebac9360ffcbb93f52190e83446f0
 // Require Express to run server and routes
 const express = require("express");
 
@@ -35,22 +39,39 @@ app.use(express.static('app'));
 
 //GET request 
 
+<<<<<<< HEAD
 app.get('/allData', sendData);
+=======
+app.get('/all', sendData);
+>>>>>>> 2ae1cade81aebac9360ffcbb93f52190e83446f0
 
 function sendData (request, response) {
   response.send(projectData);
 };
 
+<<<<<<< HEAD
 add.post('/addData',callBack);
+=======
+add.post('/add',callBack);
+>>>>>>> 2ae1cade81aebac9360ffcbb93f52190e83446f0
 function callBack(req,res){
     res.send('POST receieved')
 }
 
 // POST request
+<<<<<<< HEAD
+=======
+const projectData = [];
+
+>>>>>>> 2ae1cade81aebac9360ffcbb93f52190e83446f0
 app.post('/addData', postData);
     function postData(request, response) {
       projectData = request.body;
       response.send({ message: "Post recieved"})
       console.log(request);
 }
+<<<<<<< HEAD
     
+=======
+    
+>>>>>>> 2ae1cade81aebac9360ffcbb93f52190e83446f0
