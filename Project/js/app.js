@@ -22,6 +22,7 @@ function performAction(e){
 
 }
 
+// get weather api data 
 const getForecastData = async (baseURL,zipCodeInput,apiKey) => {
   const res = await fetch(baseURL+zipCodeInput+apiKey)
   try{
@@ -29,9 +30,10 @@ const getForecastData = async (baseURL,zipCodeInput,apiKey) => {
     console.log(data)
     return data; 
   } catch(error) {
-    console.log("error",error);
+    console.log("errormsg",error);
   }
 }
+
 
 // Post request in async format - received from udacity course 
 const postData = async ( url = '', data = {})=>{
@@ -61,7 +63,7 @@ let weatherData = (data) => {
       errorMsg.innerHTML = '';
   place.innerHTML = `${data.city}`;
   hum.innerHTML = `${data.humidity} %`;
-  temp.innerHTML = `${data.temp.toFixed(2)} °C`;
+  temp.innerHTML = `${Math.floor(temp)} °C`;
   feelslike.innerHTML = `${data.feelslike}°C`;
 }
 
@@ -87,28 +89,17 @@ const getForecastError = async(url, location, key,) => {
 
 }
 
-//Gets weather data from API
-const getTheForecast = async(baseURL,zip,apiKey) => {
-  console.log(`${baseURL}${zip}&appid=${apiKey}`);
-  const response = await fetch(`${baseURL}${zip}&appid=${apiKey}`);
-  try{
-    const weatherData = await response.json();
-    return weatherData;
-  } catch(error) {
-    console.log('errorMsg', error);
-  }
-
-} 
-
 //Update User UI 
 const updateUI = async () => {
-  const request = await fetch('/all');
+  const request = await fetch('/allData');
   try{
     const allData = await request.json();
     document.getElementById('humidity').innerHTML = allData[0].hum;
     document.getElementById('city').innerHTML = allData[0].place;
     document.getElementById('temp').innerHTML = allData[0].temp;
-    document.getElementById('feelslike').innerHTML = allData[0].feelslike;  
+    document.getElementById('feelslike').innerHTML = allData[0].feelslike; 
+    document.getElementById('feelings').innerHTML = allData[0].feelings;
+    document.getElementById('zip').innerHTML = allData[0].zip;
 
   }catch(error){
     console.log("error", error);
@@ -123,7 +114,7 @@ const locationFinder = new Promise(function(resolve, error) {
     navigator.geolocation.getCurrentPosition(getLocation);
   }
   else {
-    locationFinder.innerHTML = error("Location information is unavailable.");
+    locationFinder.innerHTML = error("");
 
   }
   function getLocation(position) {
