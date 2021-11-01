@@ -12,7 +12,8 @@ const submit = document.querySelector('#generate');
 const hum = document.querySelector('#humidity');
 const feelslike = document.querySelector('#feelslike');
 const temp = document.querySelector('#temp');
-const place = document.querySelector('#city');
+const place = document.querySelector('#city'); 
+
 
 document.getElementById('generate').addEventListener('click', performAction);
 
