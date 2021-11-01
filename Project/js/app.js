@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 // Display current date, time & location (est vs pst etc)
 const d = new Date();
 document.getElementById("date").innerHTML = d;
@@ -16,7 +18,7 @@ const place = document.querySelector('#city');
 
 document.getElementById('generate').addEventListener('click', performAction);
 
-function performAction(e){
+function performAction(){
   const zipCodeInput = document.getElementById('zip').value;
   getForecastData(baseURL,zipCodeInput,apiKey)
 
@@ -131,4 +133,4 @@ const locationFinder = new Promise(function(resolve, error) {
       "<br>Longitude: " + position.coords.longitude;
       resolve(`worked`);   
   }
-});  
+});
